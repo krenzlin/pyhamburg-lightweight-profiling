@@ -35,3 +35,16 @@ class Sampler:
         with open(filename, 'w') as f:
             for frame, count in self.stack_counts.items():
                 f.write('{} {}\n'.format(frame, count))
+
+
+    def __enter__(self):
+        self.start()
+        return self
+
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.stop()
+
+
+    def __del__(self):
+        self.stop()
