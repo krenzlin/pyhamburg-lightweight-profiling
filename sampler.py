@@ -4,9 +4,11 @@ import signal
 
 
 class Sampler:
-    def __init__(self, interval=0.001):
+    def __init__(self, interval=0.001, filename=None, save_on_exit=False):
         self.stack_counts = collections.defaultdict(int)
         self.interval = interval
+        self.filename = filename
+        self.save_on_exit = save_on_exit
         
 
     def _sample(self, signum, frame):
@@ -31,7 +33,9 @@ class Sampler:
         signal.setitimer(signal.ITIMER_VIRTUAL, 0, 0)
 
 
-    def save(self, filename):
+    def save(self, filename=None):
+        if filename is None:
+            filename = self.filename
         with open(filename, 'w') as f:
             for frame, count in self.stack_counts.items():
                 f.write('{} {}\n'.format(frame, count))
@@ -44,7 +48,6 @@ class Sampler:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.stop()
-
-
-    def __del__(self):
-        self.stop()
+        if self.save_on_exit:
+            self.save()
+        return False  # to re-raise possible exception
