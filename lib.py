@@ -16,7 +16,7 @@ def fast(i):
     
 
 def do_stuff():
-    N = 10000
+    N = 5000
     for i in range(N):
         slow(i)
         medium(i)
