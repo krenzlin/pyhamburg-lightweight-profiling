@@ -54,8 +54,17 @@ vs.
 
  `N = 10_000`
 
+
+## FlameGraph
+
+* visualize
+* https://github.com/brendangregg/FlameGraph
+
+`$ ./flamegraph.pl profiler.out > graph.svg`
+
+
 # Links
 
 * original article - https://www.nylas.com/blog/performance/
 * https://p403n1x87.github.io/python/profiling/2019/05/05/python-profiling.html
-* FlameGraph - https://github.com/brendangregg/FlameGraph
+
